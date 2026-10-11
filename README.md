@@ -64,13 +64,13 @@ lab05-api-testing/
 
 
 
-Эхлээд төслийн хавтас руу орно.
+Эхлээд PowerShell нээгээд төслийн хавтас руу орно.
 
 
 
 ```powershell
 
-cd C:\\Users\\User\\lab05-api-testing
+cd "C:\\Users\\User\\lab05-api-testing"
 
 ```
 
@@ -88,15 +88,11 @@ node server.js
 
 
 
-Сервер ажиллаж байх үед энэ PowerShell цонхыг хааж болохгүй. Newman тестийг өөр PowerShell цонхонд ажиллуулна.
+Сервер ажиллаж байх үед энэ PowerShell цонхыг нээлттэй үлдээнэ. Newman тестийг өөр PowerShell цонхонд ажиллуулна.
 
 
 
-Үндсэн хаяг:
-
-
-
-http://localhost:3000
+Үндсэн хаяг: http://localhost:3000
 
 
 
@@ -104,7 +100,7 @@ http://localhost:3000
 
 
 
-`lab05-collection.json` файлд дараах тохиолдлуудыг шалгах тестүүд багтсан.
+`lab05-collection.json` файлд дараах 9 тохиолдлыг шалгах тестүүд багтсан.
 
 
 
@@ -132,7 +128,7 @@ http://localhost:3000
 
 
 
-Сервер ажиллаж байгаа үед дараах командыг ажиллуулна.
+API сервер ажиллаж байгаа эсэхийг шалгаад, төслийн хавтас дахь өөр PowerShell цонхонд дараах командыг ажиллуулна.
 
 
 
@@ -140,9 +136,7 @@ http://localhost:3000
 
 New-Item -ItemType Directory -Force results
 
-newman.cmd run lab05-collection.json 2>\&1 |
-
-&#x20;   Tee-Object -FilePath results/newman-pass.txt
+newman.cmd run lab05-collection.json 2>\&1 | Tee-Object -FilePath results/newman-pass.txt
 
 ```
 
@@ -170,15 +164,13 @@ newman.cmd run lab05-collection.json 2>\&1 |
 
 
 
-`lab05-collection-fail.json` файлд зориуд буруу хүлээлт оруулсан тест бий. Ингэснээр API-ийн хариу хүлээлттэй таарахгүй үед тест хэрхэн FAIL болохыг харуулна.
+`lab05-collection-fail.json` файлд зориуд буруу хүлээлт оруулсан тест бий. Ингэснээр API-ийн хариу хүлээлттэй таарахгүй үед тест хэрхэн `FAIL` болохыг харуулна.
 
 
 
 ```powershell
 
-newman.cmd run lab05-collection-fail.json 2>\&1 |
-
-&#x20;   Tee-Object -FilePath results/newman-fail.txt
+newman.cmd run lab05-collection-fail.json 2>\&1 | Tee-Object -FilePath results/newman-fail.txt
 
 ```
 
@@ -188,9 +180,9 @@ newman.cmd run lab05-collection-fail.json 2>\&1 |
 
 
 
-\- 1 зориудын assertion FAIL болно.
+\- Нэг зориудын assertion `FAIL` болно.
 
-\- Бусад тестүүд ажиллана.
+\- Бусад тестүүд үр дүнгээ харуулна.
 
 \- Тайлан `results/newman-fail.txt` файлд хадгалагдана.
 
@@ -200,7 +192,7 @@ newman.cmd run lab05-collection-fail.json 2>\&1 |
 
 
 
-API сервер унтарсан үед хүсэлтүүд `ECONNREFUSED` алдаатай болно.
+API сервер унтарсан үед Newman хүсэлтүүд сервертэй холбогдож чадахгүй тул `ECONNREFUSED` алдаа гарч болно.
 
 
 
@@ -216,7 +208,7 @@ results/newmandown.txt
 
 
 
-Энэ нь сервертэй холбогдох боломжгүй үеийн алдааг харуулна.
+Энэ нь сервертэй холбогдох боломжгүй үеийн алдааг харуулна. Сервер унтарсан үед гарсан холболтын алдаа нь API-ийн бүх тест буруу гэсэн үг биш юм.
 
 
 
@@ -224,7 +216,7 @@ results/newmandown.txt
 
 
 
-Өөрчлөлтүүдийг шалгах:
+Өөрчлөлтийн төлөвийг шалгах:
 
 
 
@@ -236,13 +228,13 @@ git status
 
 
 
-Файлуудыг нэмэх:
+Файлуудыг Git-д нэмэх:
 
 
 
 ```powershell
 
-git add README.md
+git add README.md lab05-collection.json lab05-collection-fail.json results
 
 ```
 
@@ -254,7 +246,7 @@ Commit хийх:
 
 ```powershell
 
-git commit -m "Add Mongolian README documentation"
+git commit -m "Update API testing documentation and results"
 
 ```
 
@@ -272,6 +264,22 @@ git log --oneline
 
 
 
+GitHub руу илгээх:
+
+
+
+```powershell
+
+git push -u origin main
+
+```
+
+
+
+Хэрэв GitHub-аас `403 Permission denied` алдаа гарвал репозиторид бичих эрхтэй GitHub бүртгэлээр нэвтэрсэн эсэхээ шалгана.
+
+
+
 \## 10. Дүгнэлт
 
 
@@ -285,4 +293,6 @@ git log --oneline
 
 
 \*\*Анхаарах зүйл:\*\* `newmandown.txt` файл дахь холболтын алдаа нь сервер ажиллаагүй үед үүссэн. Энэ нь API-ийн бүх тест буруу гэсэн үг биш юм.
+
+
 
